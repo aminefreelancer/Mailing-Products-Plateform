@@ -38,6 +38,20 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $attributes = $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'posology' => ['nullable', 'string', 'max:255'],
+            'cure' => ['nullable', 'string', 'max:255'],
+            'condition' => ['nullable', 'string', 'max:255'],
+            'url' => ['nullable', 'string', 'max:255'],
+            'img' => ['nullable', 'string', 'max:255'],
+            'observation' => ['nullable', 'string', 'max:255'],
+            'price' => ['required', 'numeric', 'min:0']
+        ]);
+        $product = Product::create($attributes);
+
+        return $product;
+        
     }
 
     /**
@@ -49,6 +63,8 @@ class ProductController extends Controller
     public function show($id)
     {
         //
+        $product = Product::findOrFail($id);
+        return $product;
     }
 
     /**
@@ -71,7 +87,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $attributes = $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'posology' => ['nullable', 'string', 'max:255'],
+            'cure' => ['nullable', 'string', 'max:255'],
+            'condition' => ['nullable', 'string', 'max:255'],
+            'url' => ['nullable', 'string', 'max:255'],
+            'img' => ['nullable', 'string', 'max:255'],
+            'observation' => ['nullable', 'string', 'max:255'],
+            'price' => ['required', 'numeric', 'min:0']
+        ]);
+
+        $product = Product::findOrFail($id);
+        $product->update($attributes);
+
+        return $product;   
     }
 
     /**
@@ -83,5 +113,8 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return $product;
     }
 }

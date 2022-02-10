@@ -1,9 +1,9 @@
 <template>
     <div>
-        <!--Page header-->
+<!--Page header-->
         <div class="page-header">
             <div class="page-leftheader">
-                <h4 class="page-title mb-0 text-primary">Nouveau Produit</h4>
+                <h4 class="page-title mb-0 text-primary">Modification Produit</h4>
             </div> 
             <div class="page-rightheader">
                 <div class="btn-list">
@@ -23,7 +23,7 @@
                         <h3 class="card-title">Information Produit</h3>
                     </div>
                     <div class="card-body">
-                        <form @submit.prevent="addProduct">
+                        <form @submit.prevent="updateProduct">
                             <div class="row">
                                 <div class="col-sm-6 col-md-3">
                                     <div class="form-group">
@@ -93,48 +93,66 @@
 
 <script>
     export default {
-        name: "NewProduct",
+        name: "EditProduct",
         data() {
             return {
                 product: new Form({
+                    id: '',
                     name: '',
+                    posology: '',
+                    cure: '', 
                     condition: '',
-                    posology: '', 
-                    cure: '',
                     price: '',
-                    observation: '',
+                    img: '',
                     url: '',
-                    img: ''
+                    observation: ''
                 }),
-                btnText: 'Valider',
                 btnDisable: false,
+                btnText: 'Modifier'
             }
         },
         methods: {
-            addProduct() {
+            getProduct(id) {
+                this.$Progress.start()
+                axios.get('/api/products/'+id)
+                .then((response) => {
+                    this.product.fill(response.data)
+                    this.$Progress.finish()
+                })
+                .catch((error) => {
+                    this.$Progress.fail()
+                })
+            },
+            updateProduct() {
                 this.$Progress.start()
                 this.btnText= 'Traitement en cours'
                 this.btnDisable = true
-                // Submit the form via a POST request
-                this.product.post('/api/products')
-                .then(()=> {
+                this.product.put('/api/products/'+this.product.id)
+                .then((response) => {
                     Toast.fire({
                         icon: 'success',
-                        title: 'Nouveau produit ajouté'
+                        title: 'Produit modifié avec succès'
                     })
                     this.$router.push({ name: 'products'})
                     this.$Progress.finish()
                 })
-                .catch((error)=> {
+                .catch((error) => {
                     Toast.fire({
                         icon: 'error',
-                        title: 'Ajout échoué !'
+                        title: 'Modification échouée !'
                     })
                     this.$Progress.fail()
-                    this.btnText= 'Valider'
+                    this.btnText= 'Modifier'
                     this.btnDisable = false 
                 })
             }
+        },
+        created() {
+            this.getProduct(this.$route.params.id)
         }
     }
 </script>
+
+<style lang="scss" scoped>
+
+</style>
