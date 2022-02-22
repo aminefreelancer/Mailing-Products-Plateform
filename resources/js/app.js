@@ -7,8 +7,13 @@ Vue.use(VueRouter)
 
 import Index from './components/Index.vue';
 import Products from './components/Products.vue';
-import EditProduct from './components/EditProduct.vue';
 import NewProduct from './components/NewProduct.vue';
+import EditProduct from './components/EditProduct.vue';
+import Files from './components/Files.vue';
+import NewFile from './components/NewFile.vue';
+import EditFile from './components/EditFile.vue';
+
+
 
 //Config Vue Form Validation
 import { Form } from 'vform'
@@ -28,7 +33,10 @@ const router = new VueRouter({
     {path: '/', component: Index, name: 'dashboard'},
     {path: '/products', component: Products, name: 'products'},
     {path: '/products/create', component: NewProduct, name: 'newProduct'},
-    {path: '/products/edit/:id', component: EditProduct, name: 'editProduct'}
+    {path: '/products/edit/:id', component: EditProduct, name: 'editProduct'},
+    {path: '/files', component: Files, name: 'files'},
+    {path: '/files/create', component: NewFile, name: 'newFile'},
+    {path: '/files/edit/:id', component: EditFile, name: 'editFile'},
 
   ]
 });
@@ -41,8 +49,13 @@ Vue.use(VueProgressBar, {
     height: '3px'
 })
 
+//Multiselect
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
+
 //Config SweetAlert
 import Swal from 'sweetalert2'
+import Vue from 'vue';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -56,9 +69,6 @@ const Toast = Swal.mixin({
 })
 window.Swal = Swal;
 window.Toast = Toast;
-
-
-
 
 const app = new Vue({
     el: '#app',

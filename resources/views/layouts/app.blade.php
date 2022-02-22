@@ -89,7 +89,7 @@
 							<span class="side-menu__label">Produits GHN</span><i class="angle fe fe-chevron-right"></i></a>
 							<ul class="slide-menu">
 								<li><router-link :to="{name: 'newProduct'}" class="slide-item"> Nouveau Produit</router-link></li>
-								<li><router-link :to="{name: 'products'}" class="slide-item"> Liste des produits</a></li>
+								<li><router-link :to="{name: 'products'}" class="slide-item"> Liste des produits</router-link></li>
 							</ul>
 						</li>
 						
@@ -98,8 +98,8 @@
 							<svg xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M10 3H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM9 9H5V5h4v4zm11-6h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 6h-4V5h4v4zm-9 4H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1zm-1 6H5v-4h4v4zm8-6c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4-1.794-4-4-4zm0 6c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2z"/></svg>
 							<span class="side-menu__label">Gestions PDF</span><i class="angle fe fe-chevron-right"></i></a>
 							<ul class="slide-menu ">
-								<li><a href="calendar.html" class="slide-item"> Nouveau PDF</a></li>
-								<li><a href="cookies.html" class="slide-item"> Liste des PDF</a></li>
+								<li><router-link :to="{name: 'newFile'}" class="slide-item"> Nouveau PDF</router-link></li>
+								<li><router-link :to="{name: 'files'}" class="slide-item"> Liste des PDF</router-link></li>
 							</ul>
 						</li>
 						<li class="side-item side-item-category">Gestion Mailing </li>
@@ -281,7 +281,7 @@
 
 	@guest 
 	<!-- Show Password -->
-	<script src="../../assets/js/bootstrap-show-password.min.js"></script>
+	<script src="{{asset('assets/js/bootstrap-show-password.min.js')}}"></script>
 	@endguest 
 
     <!-- Custom js-->

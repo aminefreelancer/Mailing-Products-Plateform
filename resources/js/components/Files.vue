@@ -3,12 +3,12 @@
         <!--Page header-->
         <div class="page-header">
             <div class="page-leftheader">
-                <h4 class="page-title mb-0 text-primary">Produits GHN</h4>
+                <h4 class="page-title mb-0 text-primary">Documents GHN</h4>
             </div> 
             <div class="page-rightheader">
                 <div class="btn-list">
-                    <router-link :to="{name: 'newProduct'}" class="btn btn-outline-primary"><i class="fa fa-plus me-2"></i>
-                        Nouveau Produit
+                    <router-link :to="{name: 'newFile'}" class="btn btn-outline-primary"><i class="fa fa-plus me-2"></i>
+                        Nouveau Document
                     </router-link>
                      
                 </div>
@@ -21,30 +21,30 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Liste des produits</h3>
+                        <h3 class="card-title">Liste des documents</h3>
                     </div>
                     <div class="card-body">
-                        <div v-if="products.length" class="table-responsive">
+                        <div v-if="files.length" class="table-responsive">
                             <table class="table table-bordered table-hover card-table table-vcenter text-nowrap">
                                 <thead>
                                     <tr class="border-top">
-                                        <th>Nom</th>
-                                        <th>Conditionnement</th>
-                                        <th>Prix</th>
+                                        <th>Document</th>
+                                        <th>Produit</th>
+                                        <th>lien</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-bottom" v-for="product in products" :key="product.id">
-                                        <td>{{product.name}}</td>
-                                        <td>{{product.condition}}</td>
-                                        <td>{{product.price}} DZD</td>
+                                    <tr class="border-bottom" v-for="file in files" :key="file.id">
+                                        <td>{{file.name}}</td>
+                                        <td>{{file.product.name}}</td>
+                                        <td>{{file.url}}</td>
                                         <td>
-                                            <router-link :to="{name: 'editProduct', params: {id: product.id}}" class="btn btn-warning">
+                                            <router-link :to="{name: 'editFile', params: {id: file.id}}" class="btn btn-warning">
                                                 <i class="fa fa-edit"></i>
                                             </router-link>
 
-                                            <button @click="removeProduct(product.id)" class="btn btn-danger">
+                                            <button @click="removeFile(file.id)" class="btn btn-danger">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </td>
@@ -52,7 +52,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <p v-else class="text-center"> Aucun produit trouvé ! </p>
+                        <p v-else class="text-center"> Aucun document trouvé ! </p>
                     </div>
                 </div>
             </div>
@@ -63,25 +63,25 @@
 
 <script>
     export default {
-        name:'Products',
+        name:'files',
         data() {
             return {
-                products: []
+                files: []
             }
         }, 
         methods: {
-            getProducts() {
-                axios.get('/api/products')
+            getFiles() {
+                axios.get('/api/files')
                 .then((response) => {
-                    //console.log(response.data)
-                    this.products = response.data;
+                    console.log(response.data)
+                    this.files = response.data;
                     this.loading=false;
                 })
                 .catch((error) => {
                     console.log(error)
                 })
             },
-            removeProduct(id) {
+            removeFile(id) {
                 Swal.fire({
                     title: 'Attention !',
                     text: "Action irréversible",
@@ -95,10 +95,10 @@
                     if (result.isConfirmed) {
                         this.$Progress.start()
                         //Http request to delete the produit with $id
-                        axios.delete('/api/products/'+id)
+                        axios.delete('/api/files/'+id)
                         .then(()=>{
-                            Swal.fire('Produit supprimé!', '', 'success')
-                            this.getProducts()
+                            Swal.fire('Document supprimé!', '', 'success')
+                            this.getFiles()
                             this.$Progress.finish()
                         }).catch(()=>{
                             Swal.fire('Erreur!','Suppression échouée.','error')
@@ -109,7 +109,7 @@
             }
         },
         created() {
-            this.getProducts()
+            this.getFiles()
         }
     }
 </script>
