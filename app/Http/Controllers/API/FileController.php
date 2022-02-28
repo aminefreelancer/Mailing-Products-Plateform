@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File as Files;
 
 class FileController extends Controller
 {
@@ -15,7 +16,7 @@ class FileController extends Controller
      */
     public function index()
     {
-        //
+        return File::with('product')->orderBy('id', 'DESC')->get();
     }
 
     /**
@@ -105,5 +106,14 @@ class FileController extends Controller
     public function destroy(File $file)
     {
         //
+        $path = public_path('upload\\'.$file->pdf);
+        
+        if(Files::exists($path)){
+            Files::delete([$path]);
+            $result = File::findOrFail($file->id);
+            $result->delete();
+            return response()->json(['message'=>'You have successfully deleted file.']);
+        }
+        return response()->json(['message'=>'Suppression PDF echouée !'], 422);
     }
 }

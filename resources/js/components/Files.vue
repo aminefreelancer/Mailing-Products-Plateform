@@ -36,14 +36,10 @@
                                 </thead>
                                 <tbody>
                                     <tr class="border-bottom" v-for="file in files" :key="file.id">
-                                        <td>{{file.name}}</td>
+                                        <td>{{file.pdf}}</td>
                                         <td>{{file.product.name}}</td>
                                         <td>{{file.url}}</td>
                                         <td>
-                                            <router-link :to="{name: 'editFile', params: {id: file.id}}" class="btn btn-warning">
-                                                <i class="fa fa-edit"></i>
-                                            </router-link>
-
                                             <button @click="removeFile(file.id)" class="btn btn-danger">
                                                 <i class="fa fa-trash"></i>
                                             </button>
@@ -97,8 +93,8 @@
                         //Http request to delete the produit with $id
                         axios.delete('/api/files/'+id)
                         .then(()=>{
-                            Swal.fire('Document supprimé!', '', 'success')
                             this.getFiles()
+                            Swal.fire('Document supprimé!', '', 'success')
                             this.$Progress.finish()
                         }).catch(()=>{
                             Swal.fire('Erreur!','Suppression échouée.','error')
