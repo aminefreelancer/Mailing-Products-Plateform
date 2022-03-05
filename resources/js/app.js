@@ -11,9 +11,7 @@ import NewProduct from './components/NewProduct.vue';
 import EditProduct from './components/EditProduct.vue';
 import Files from './components/Files.vue';
 import NewFile from './components/NewFile.vue';
-import EditFile from './components/EditFile.vue';
-
-
+import Doctors from './components/Doctors.vue';
 
 //Config Vue Form Validation
 import { Form } from 'vform'
@@ -28,25 +26,24 @@ Vue.component(AlertSuccess.name, AlertSuccess)
 
 
 const router = new VueRouter({
-  mode: 'history',
-  routes: [
-    {path: '/', component: Index, name: 'dashboard'},
-    {path: '/products', component: Products, name: 'products'},
-    {path: '/products/create', component: NewProduct, name: 'newProduct'},
-    {path: '/products/edit/:id', component: EditProduct, name: 'editProduct'},
-    {path: '/files', component: Files, name: 'files'},
-    {path: '/files/create', component: NewFile, name: 'newFile'},
-    {path: '/files/edit/:id', component: EditFile, name: 'editFile'},
-
-  ]
+	mode: 'history',
+	routes: [
+		{path: '/', component: Index, name: 'dashboard'},
+		{path: '/products', component: Products, name: 'products'},
+		{path: '/products/create', component: NewProduct, name: 'newProduct'},
+		{path: '/products/edit/:id', component: EditProduct, name: 'editProduct'},
+		{path: '/files', component: Files, name: 'files'},
+		{path: '/files/create', component: NewFile, name: 'newFile'},
+		{path: '/doctors', component: Doctors, name: 'doctors'},
+	]
 });
 
 //Config Progress Bar
 import VueProgressBar from 'vue-progressbar'
 Vue.use(VueProgressBar, {
-    color: 'rgb(143, 255, 199)',
-    failedColor: 'red',
-    height: '3px'
+		color: 'rgb(143, 255, 199)',
+		failedColor: 'red',
+		height: '3px'
 })
 
 //Multiselect
@@ -57,20 +54,37 @@ Vue.component('multiselect', Multiselect)
 import Swal from 'sweetalert2'
 import Vue from 'vue';
 const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    onOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
+		toast: true,
+		position: 'top-end',
+		showConfirmButton: false,
+		timer: 3000,
+		timerProgressBar: true,
+		onOpen: (toast) => {
+			toast.addEventListener('mouseenter', Swal.stopTimer)
+			toast.addEventListener('mouseleave', Swal.resumeTimer)
+		}
 })
 window.Swal = Swal;
 window.Toast = Toast;
 
+//Global methods 
+
+Vue.mixin({
+	methods: {
+		getDoctors: function () {
+			axios.get('/api/doctors')
+			.then((response) => {
+					this.doctors = response.data;
+					this.loading=false;
+			})
+			.catch((error) => {
+					console.log(error)
+			})
+		},
+	},
+})
+
 const app = new Vue({
-    el: '#app',
-    router
+		el: '#app',
+		router
 });

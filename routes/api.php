@@ -21,4 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('products', 'API\ProductController');
     Route::apiResource('files', 'API\FileController');
+    Route::apiResource('emails', 'API\EmailController');
+    Route::apiResource('doctors', 'API\DoctorController');
 });
