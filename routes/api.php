@@ -22,5 +22,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('products', 'API\ProductController');
     Route::apiResource('files', 'API\FileController');
     Route::apiResource('emails', 'API\EmailController');
+    Route::apiResource('logs', 'API\LogController');
     Route::apiResource('doctors', 'API\DoctorController');
 });

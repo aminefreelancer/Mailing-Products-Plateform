@@ -12,6 +12,8 @@ import EditProduct from './components/EditProduct.vue';
 import Files from './components/Files.vue';
 import NewFile from './components/NewFile.vue';
 import Doctors from './components/Doctors.vue';
+import Email from './components/Format.vue';
+import NewEmail from './components/NewEmail.vue';
 
 //Config Vue Form Validation
 import { Form } from 'vform'
@@ -35,6 +37,8 @@ const router = new VueRouter({
 		{path: '/files', component: Files, name: 'files'},
 		{path: '/files/create', component: NewFile, name: 'newFile'},
 		{path: '/doctors', component: Doctors, name: 'doctors'},
+		{path: '/email', component: Email, name: 'email'},
+		{path: '/email/create', component: NewEmail, name: 'newEmail'},
 	]
 });
 
@@ -67,10 +71,24 @@ const Toast = Swal.mixin({
 window.Swal = Swal;
 window.Toast = Toast;
 
+// VUE Editor 
+import { VueEditor } from "vue2-editor";
+Vue.component('vue-editor', VueEditor)
 //Global methods 
 
 Vue.mixin({
 	methods: {
+		getProducts() {
+			axios.get('/api/products')
+			.then((response) => {
+				//console.log(response.data)
+				this.products = response.data;
+				this.loading=false;
+			})
+			.catch((error) => {
+				console.log(error)
+			})
+		},
 		getDoctors: function () {
 			axios.get('/api/doctors')
 			.then((response) => {
@@ -79,6 +97,19 @@ Vue.mixin({
 			})
 			.catch((error) => {
 					console.log(error)
+			})
+		},
+		getFormat() {
+			axios.get('/api/emails')
+			.then((response) => {
+				// console.log(response.data)
+				this.email.id = response.data.id;
+				this.email.subject = response.data.subject;
+				this.email.format = response.data.format;
+				this.loading=false;
+			})
+			.catch((error) => {
+				console.log(error)
 			})
 		},
 	},

@@ -15,7 +15,7 @@ class EmailController extends Controller
      */
     public function index()
     {
-        //
+        return Email::findOrFail(1);
     }
 
     /**
@@ -25,7 +25,7 @@ class EmailController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -70,7 +70,15 @@ class EmailController extends Controller
      */
     public function update(Request $request, Email $email)
     {
-        //
+        $attributes = $this->validate($request, [
+            'subject' => ['required', 'string', 'max:255'],
+            'format' => ['required', 'string']
+        ]);
+
+        $email = Email::findOrFail(1);
+        $email->update($attributes);
+
+        return $email;
     }
 
     /**

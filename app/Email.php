@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Email extends Model
 {
     //
-    protected $fillable = ['format'];
+    protected $fillable = ['subject', 'format'];
 }

@@ -70,17 +70,6 @@
             }
         }, 
         methods: {
-            getProducts() {
-                axios.get('/api/products')
-                .then((response) => {
-                    //console.log(response.data)
-                    this.products = response.data;
-                    this.loading=false;
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-            },
             removeProduct(id) {
                 Swal.fire({
                     title: 'Attention !',

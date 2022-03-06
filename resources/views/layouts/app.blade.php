@@ -32,6 +32,7 @@
 
     <!-- P-scroll bar css-->
     <link href="{{asset('assets/plugins/p-scrollbar/p-scrollbar.css')}}" rel="stylesheet" />
+    <link href="{{asset('assets/plugins/wysiwyag/richtext.css')}}" rel="stylesheet" />
 	@endauth
 
     <!---Icons css-->
@@ -108,8 +109,8 @@
 							<svg xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M19 3H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zm0 2 .001 4H5V5h14zM5 11h8v8H5v-8zm10 8v-8h4.001l.001 8H15z"/></svg>
 							<span class="side-menu__label">Mailing</span><i class="angle fe fe-chevron-right"></i></a>
 							<ul class="slide-menu">
-								<li><a href="#" class="slide-item">Nouveau Mail</a></li>
-								<li><a href="#" class="slide-item">Format Mailing</a></li>
+								<li><router-link :to="{name: 'newEmail'}" class="slide-item">Nouveau Mail</router-link></li>
+								<li><router-link :to="{name: 'email'}" class="slide-item">Format Mailing</router-link></li>
 							</ul>
 						</li>
                         <li class="slide">
@@ -244,7 +245,7 @@
 				<div class="container">
 					<div class="row align-items-center flex-row-reverse">
 						<div class="col-md-12 col-sm-12 text-center">
-							Copyright © 2021 <a href="#">azea</a>. Designed with <span class="fa fa-heart text-danger"></span> by <a href="#"> Spruko </a> All rights reserved
+							Copyright © 2022 <a href="#">GHN</a>. All rights reserved
 						</div>
 					</div>
 				</div>
@@ -286,6 +287,7 @@
     <script src="{{asset('assets/plugins/p-scrollbar/p-scrollbar.js')}}"></script>
     <script src="{{asset('assets/plugins/p-scrollbar/p-scroll1.js')}}"></script>
     <script src="{{asset('assets/plugins/p-scrollbar/p-scroll.js')}}"></script>
+	
 	@endauth 
 
 	@guest 

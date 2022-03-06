@@ -31,7 +31,7 @@
                                 <div class="col-sm-12 col-md-6"> 
                                     <div class="form-group">	
 										<label class="form-label">Produit <span class="text-red">*</span></label>
-										<multiselect v-model="file.product" :options="products" selectLabel="Entrer pour sélectionner" deselectLabel="Entrer pour déselectionner" selectedLabel="Sélectionné" track-by="name" placeholder="Sélectionner un produit" :close-on-select="true" required :preserve-search="true" label="name" :class="{ 'is-invalid': file.errors.has('file.product')}" ></multiselect>
+										<multiselect v-model="file.product" :options="products" selectLabel="Entrer pour sélectionner" deselectLabel="Entrer pour déselectionner" selectedLabel="Sélectionné" track-by="name" placeholder="Sélectionner un produit" :close-on-select="true" required :preserve-search="true" label="name" :class="{ 'is-invalid': file.errors.has('product')}" ></multiselect>
                                         <has-error :form="file" field="product"></has-error>
                                     </div>
                                     <div class="form-group">

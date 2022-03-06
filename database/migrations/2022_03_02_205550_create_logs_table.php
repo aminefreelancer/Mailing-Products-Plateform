@@ -18,6 +18,8 @@ class CreateLogsTable extends Migration
             $table->string('email');
             $table->string('subject');
             $table->text('format');
+            $table->integer('doctor_id')->unsigned()->nullable();
+            $table->foreign('doctor_id')->references('id')->on('doctors');
             $table->timestamps();
         });
     }

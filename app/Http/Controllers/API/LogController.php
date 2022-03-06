@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Log;
+use App\File;
+use App\Mail\DocMail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class LogController extends Controller
 {
@@ -37,6 +40,33 @@ class LogController extends Controller
     public function store(Request $request)
     {
         //
+        
+        $attributes = $this->validate($request, [
+            'to' => ['required'],
+            'subject' => ['required', 'string', 'max:255'],
+            'docs' => ['required'],
+            'format' => ['required', 'string']
+        ]);
+
+        $products = [];
+        foreach($request->docs as $doc){
+            $products[] = $doc['id'];
+        }
+
+        $files = File::whereIn('product_id', $products)->pluck('pdf');
+
+        foreach($request->to as $doctor){
+            $log = Log::create([
+                'email' => $doctor['email'],
+                'subject' => $request->subject,
+                'format'  => $request->format,
+                'doctor_id' => $doctor['id']
+            ]);
+
+            Mail::to($request->user())->send(new DocMail($request->subject, $request->format, $files));
+        }
+
+        return response()->json(['message'=>'You have successfully send emails.']);
     }
 
     /**
